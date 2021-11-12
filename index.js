@@ -40,7 +40,11 @@ fetch("https://apis.scrimba.com/jsonplaceholder/todos", {
     body: JSON.stringify({
         title: "Buy Milk",
         complete: false
-    })
+    }),
+    headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      }
 })
     .then(res => res.json())
     .then(data => con)
