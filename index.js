@@ -1,16 +1,22 @@
+let postsArray = []
+
+function renderPosts() {
+    let html = ""
+    for (let post of postsArray) {
+        html += `
+            <h3>${post.title}</h3>
+            <p>${post.body}</p>
+            <hr />
+        `
+    }
+    document.getElementById("blog-list").innerHTML = html
+}
+
 fetch("https://apis.scrimba.com/jsonplaceholder/posts")
     .then(res => res.json())
     .then(data => {
-        const postsArr = data.slice(0, 5)
-        let html = ""
-        for (let post of postsArr) {
-            html += `
-                <h3 class="blah">${post.title}</h3>
-                <p>${post.body}</p>
-                <hr />
-            `
-        }
-        document.getElementById("blog-list").innerHTML = html
+        postsArray = data.slice(0, 5)
+        renderPosts()
     })
 
 document.getElementById("new-post").addEventListener("submit", function(e) {
@@ -34,13 +40,11 @@ document.getElementById("new-post").addEventListener("submit", function(e) {
         .then(res => res.json())
         .then(post => {
             /**
-             * Challenge: Update the DOM with the new blog entry
+             * Challenge: Use our new renderPosts function to clean up this code.
+             * 
+             * Don't forget to update the postsArray variable first!
              */
-            document.getElementById("blog-list").innerHTML = `
-                <h3 class="blah">${post.title}</h3>
-                <p>${post.body}</p>
-                <hr />
-                ${document.getElementById("blog-list").innerHTML}
-            `
+            postsArray.unshift(post)
+            renderPosts()
         })
 })
